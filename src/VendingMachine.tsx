@@ -1,4 +1,4 @@
-import {Item} from './Item';
+import {VendingItem} from './VendingItem';
 
 export function VendingMachine(){
 
@@ -9,6 +9,6 @@ export function VendingMachine(){
     ];
 
     return (
-        goods.map((good) => <Item name={good} />)
+        goods.map((good) => <VendingItem name={good} />)
     )
 }

@@ -2,7 +2,7 @@ type Props = {
     name: string;
 }
 
-export function Item({ name }: Props) {
+export function VendingItem({ name }: Props) {
 
     return (
         <>
