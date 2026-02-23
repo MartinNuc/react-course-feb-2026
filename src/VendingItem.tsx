@@ -2,7 +2,7 @@ type Props = {
     name: string;
     availableCount: number;
     onSelect: () => void;
-}
+};
 
 export function VendingItem({ name, availableCount, onSelect }: Props) {
     function handleClick() {
