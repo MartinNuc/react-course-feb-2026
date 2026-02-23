@@ -5,7 +5,7 @@ import { VendingMachine } from './VendingMachine';
 function App() {
 
   return <>
-    <Counter /> 
+    <Counter />
     <VendingMachine />
   </>
 }
