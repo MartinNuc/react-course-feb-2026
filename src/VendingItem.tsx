@@ -1,12 +1,17 @@
 type Props = {
     name: string;
+    availableCount: number;
+    onSelect: () => void;
 }
 
-export function VendingItem({ name }: Props) {
+export function VendingItem({ name, availableCount, onSelect }: Props) {
+    function handleClick() {
+        onSelect();
+    }
 
     return (
         <>
-            <button>0x</button>
+            <button onClick={handleClick}>{availableCount}x</button>
             {name}
         </>
     );

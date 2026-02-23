@@ -1,14 +1,28 @@
+import { useState } from 'react';
 import {VendingItem} from './VendingItem';
 
-export function VendingMachine(){
+type Item = {
+    id: number;
+    name: string;
+    availableCount: number;
+}
 
-    const goods = [
-        "Tatranka",
-        "Fidorka",
-        "Mars"
-    ];
+export function VendingMachine() {
+    const [items, setItems] = useState([
+        {id: 1, name: "Tatranka", availableCount: 5},
+        {id: 2, name: "Fidorka", availableCount: 5},
+        {id: 3, name: "Mars", availableCount: 0}
+    ]);
+
+    function handleSelect(selectedId: Item['id']) {
+        setItems(items.map(item => item.id === selectedId ? { ...item, availableCount: item.availableCount-1 } : item ));
+    }
 
     return (
-        goods.map((good) => <VendingItem name={good} />)
+        items.map((item) => <VendingItem key={item.id}
+                                name={item.name}
+                                availableCount={item.availableCount}
+                                onSelect={() => handleSelect(item.id)} />
+        )
     )
 }
