@@ -3,11 +3,15 @@ import './App.css'
 import { AutomaticCounter } from './AutomaticCounter';
 import { Counter } from './Counter';
 import { VendingMachine } from './VendingMachine';
-import { ClicksTracker } from './ClicksTracker';
+import { DropdownComponent } from './DropdownComponent';
 
 function App() {
   const [isVisible, setIsVisible] = useState(true);
   return <>
+
+    <DropdownComponent label="Open dropdown">
+      Hello, this is dropdown!
+    </DropdownComponent>
 
     <div>
       <button onClick={(() => setIsVisible(!isVisible))}>toggle</button>
@@ -16,11 +20,10 @@ function App() {
 
     <Counter />
     <Counter />
-    <Counter />
     <hr />
     <VendingMachine />
 
-    <ClicksTracker />
+    {/* <ClicksTracker /> */}
   </>
 }
 
