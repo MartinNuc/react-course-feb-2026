@@ -7,7 +7,7 @@ type Props = {
 
 export function DropdownComponent({label, children}: Props) {
     const [isOpen, setIsOpen] = useState(false);
-    
+
     function toggleMenu() {
         setIsOpen(!isOpen);
     }
