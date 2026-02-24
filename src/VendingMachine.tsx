@@ -1,30 +1,40 @@
 import { useState } from 'react';
 import { VendingItem } from './VendingItem';
-import { ChildrenComponent, DropdownComponent } from './DropdownComponent';
-import { Counter } from './Counter';
+import { DropdownComponent } from './DropdownComponent';
 
 type Item = {
     id: number;
     name: string;
+    price: number;
+}
+
+type ItemOption = {
+    item: Item;
     availableCount: number;
 }
 
 export function VendingMachine() {
-    const [items, setItems] = useState([
-        { id: 1, name: "Tatranka", availableCount: 5 },
-        { id: 2, name: "Fidorka", availableCount: 5 },
-        { id: 3, name: "Mars", availableCount: 0 }
+    const [itemOptions, setItems] = useState<ItemOption[]>([
+        { availableCount: 5, item: { id: 1, name: "Tatranka", price: 5 } },
+        { availableCount: 5, item: { id: 2, name: "Fidorka", price: 5 } },
+        { availableCount: 0, item: { id: 3, name: "Mars", price: 5 } }
     ]);
 
+    const [cart, setCart] = useState<Item[]>([]);
     const [coins, setCoins] = useState(0);
 
     function handleSelect(selectedId: Item['id']) {
-        setItems(items.map(item => item.id === selectedId && item.availableCount > 0 ? { ...item, availableCount: item.availableCount - 1 } : item));
+        const addedItem = itemOptions.find(item => item.item.id === selectedId)?.item;
+        if (!addedItem) { return; }
+        setItems(itemOptions.map(itemOption => itemOption.item.id === selectedId && itemOption.availableCount > 0 ? { ...itemOption, availableCount: itemOption.availableCount - 1 } : itemOption));
+        setCart([...cart, addedItem]);
     }
 
     function handleAddCoins(addedCoins: number) {
         setCoins(coins + addedCoins);
     }
+
+    const totalPrice = cart.map(item => item.price).reduce((acc, curr) => acc + curr, 0);
 
     return (
         <div>
@@ -35,13 +45,14 @@ export function VendingMachine() {
             </DropdownComponent>
 
             <div>Coins: {coins},-</div>
+            <div>Total price: {totalPrice},-</div>
 
             <ul>
-                {items.map((item) => (
-                    <li><VendingItem key={item.id}
-                        name={item.name}
-                        availableCount={item.availableCount}
-                        onSelect={() => handleSelect(item.id)} />
+                {itemOptions.map((itemOption) => (
+                    <li><VendingItem key={itemOption.item.id}
+                        name={itemOption.item.name}
+                        availableCount={itemOption.availableCount}
+                        onSelect={() => handleSelect(itemOption.item.id)} />
                     </li>
                 ))}
             </ul>
