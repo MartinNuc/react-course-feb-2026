@@ -1,3 +1,6 @@
+import styles from './VendingItem.module.css';
+import cn from 'classnames';
+
 type Props = {
     name: string;
     availableCount: number;
@@ -13,9 +16,9 @@ export function VendingItem({ name, availableCount, onSelect }: Props) {
 
     return (
         <div>
-            <button onClick={handleClick}>{availableCount}x</button>
+            <button disabled={availableCount <= 0} className={cn({ [styles.outOfStockButton]: availableCount <= 0 })} onClick={handleClick}>{availableCount}x</button>
             {name}
-            { availableCount <= 0 && <div style={{color: 'red'}}>Out of stock</div> }
+            { availableCount <= 0 && <div className={styles.outOfStockLabel}>Out of stock</div> }
         </div>
     );
 }
