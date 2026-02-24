@@ -1,10 +1,9 @@
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import styles from './DropdownComponent.module.css'
 
 type Props = {
     label: string;
-    children: React.ReactNode;
-}
+} & React.PropsWithChildren;
 
 export function DropdownComponent({label, children}: Props) {
     const [isOpen, setIsOpen] = useState(false);
