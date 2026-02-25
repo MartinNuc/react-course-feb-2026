@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useAutoFocus } from "./useAutoFocus";
 
 type Props = {
     onAddCoins: (amount: number) => void;
@@ -8,9 +9,7 @@ export function ChargeCoinInput({onAddCoins} : Props) {
     const ref = useRef<HTMLInputElement>(null);
     const [customCoinCharge, setCustomCoinCharge] = useState(50);
 
-    useEffect(() => {
-        ref.current?.focus();
-    }, []);
+    useAutoFocus(ref);
 
     function handleCustomCoinChargeKeyDown(e: React.KeyboardEvent) {
         if (e.key !== 'Enter') {
