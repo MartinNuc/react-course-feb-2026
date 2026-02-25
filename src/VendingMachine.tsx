@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { VendingItem } from './VendingItem';
 import { DropdownComponent } from './DropdownComponent';
+import { ChargeCoinInput } from './ChargeCoinInput';
 
 type Item = {
     id: number;
@@ -23,7 +24,7 @@ export function VendingMachine() {
     const [cart, setCart] = useState<Item[]>([]);
     const [coins, setCoins] = useState(0);
 
-    const [customCoinCharge, setCustomCoinCharge] = useState(50);
+    
 
     function handleSelect(selectedId: Item['id']) {
         const addedItem = itemOptions.find(item => item.item.id === selectedId)?.item;
@@ -36,15 +37,6 @@ export function VendingMachine() {
         setCoins(coins + addedCoins);
     }
 
-    function handleCustomCoinChargeKeyDown(e: React.KeyboardEvent) {
-        if (e.key !== 'Enter') {
-            return;
-        }
-
-        addCoins(customCoinCharge);
-        setCustomCoinCharge(50);
-    }
-
     const totalPrice = cart.map(item => item.price).reduce((acc, curr) => acc + curr, 0);
 
     return (
@@ -53,7 +45,7 @@ export function VendingMachine() {
                 <button onClick={() => addCoins(10)}>+ 10 coins</button>
                 <button onClick={() => addCoins(20)}>+ 20 coins</button>
                 <button onClick={() => addCoins(30)}>+ 30 coins</button>
-                <input type="number" value={customCoinCharge} onChange={(e) => setCustomCoinCharge(+e.target.value)} onKeyDown={handleCustomCoinChargeKeyDown} />
+                <ChargeCoinInput onAddCoins={addCoins} />
             </DropdownComponent>
 
             <div>Coins: {coins},-</div>
