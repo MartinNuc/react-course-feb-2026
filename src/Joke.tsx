@@ -13,4 +13,3 @@ export const Joke = () => {
         </ul>
     </div>
 }
-
