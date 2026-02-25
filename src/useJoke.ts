@@ -8,6 +8,7 @@ export function useJoke() {
     const [joke, setJoke] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
+    const [history, setHistory] = useState<string[]>([]);
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect, react-hooks/immutability
@@ -21,6 +22,7 @@ export function useJoke() {
             const body: JokeResponse = await response.json();
 
             setJoke(body.value);
+            setHistory(history => [...history, body.value]);
         } catch (e: unknown) {
             if (e instanceof Error) {
                 setError(e);
@@ -34,6 +36,7 @@ export function useJoke() {
         isLoading,
         error,
         joke,
-        fetchNext
+        fetchNext,
+        history
     }
 }
