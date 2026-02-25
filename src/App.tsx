@@ -1,12 +1,11 @@
 import './App.css'
-import { Counter } from './Counter';
-import { Joke } from './Joke';
+import { VendingAdministration } from './VendingAdministration';
 import { VendingMachine } from './VendingMachine';
 
 function App() {
   return <>
 
-    <Joke />
+    <VendingAdministration />
 
     <VendingMachine />
 
