@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type JokeResponse = {
     value: string;
@@ -10,12 +10,7 @@ export function useJoke() {
     const [error, setError] = useState<Error | null>(null);
     const [history, setHistory] = useState<string[]>([]);
 
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect, react-hooks/immutability
-        void fetchNext();
-    }, []);
-
-    async function fetchNext() {
+    const fetchNext = useCallback(async function fetchNext() {
         try {
             setIsLoading(true);
             const response = await fetch('https://api.chucknorris.io/jokes/random')
@@ -30,7 +25,11 @@ export function useJoke() {
         } finally {
             setIsLoading(false);
         }
-    }
+    }, []);
+
+    useEffect(() => {
+        void fetchNext();
+    }, [fetchNext]);
 
     return {
         isLoading,

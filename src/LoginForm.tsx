@@ -1,24 +1,35 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UserContext } from "./UserContext";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as yup from 'yup';
+import React from "react";
 
-export function LoginForm() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+const initialValues = {
+    username: '',
+    password: ''
+}
 
+const schema = yup.object().shape({
+    username: yup.string().required(),
+    password: yup.string().required(),
+})
+
+export const LoginForm = React.memo(function LoginForm() {
     const { login } = useContext(UserContext);
 
-    function handleLogin() {
-        login(username, password);
-    }
+    return <Formik onSubmit={(values) => login(values.username, values.password)} validationSchema={schema} initialValues={initialValues}>
+        <Form>
+            <div>
+                <Field name="username" />
+                <ErrorMessage name="username" component="div" />
+            </div>
 
-    return <div>
-        <div>
-            Username: <input value={username} onChange={(e) => setUsername(e.target.value)} />
-        </div>
-        <div>
-            Password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
+            <div>
+                <Field name="password" type="password" />
+                <ErrorMessage name="password" component="div" />
+            </div>
 
-        <button type="button" onClick={handleLogin}>Login</button>
-    </div>
-}
+            <button type="submit">Login</button>
+        </Form>
+    </Formik>
+});

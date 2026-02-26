@@ -9,7 +9,7 @@ type Machine = {
 
 type MachinesResponse = Machine[];
 
-export function Machines() {
+export const Machines = () => {
     const [machines, setMachines] = useState<Machine[]>([]);
     const { token } = useContext(UserContext);
 
