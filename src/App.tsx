@@ -1,24 +1,11 @@
+import { RouterProvider } from 'react-router-dom';
 import './App.css'
-import { MyErrorBoundary } from './MyErrorBoundary';
-import { ThrowComponent } from './ThrowingComponent';
 import { UserContextProvider } from './UserContext';
-import { UserInfoPane } from './UserInfoPane';
-import { VendingAdministration } from './VendingAdministration';
-import { VendingMachine } from './VendingMachine';
+import { router } from './router/router';
 
 function App() {
   return <UserContextProvider>
-
-    <MyErrorBoundary>
-      <ThrowComponent />
-    </MyErrorBoundary>
-
-    <UserInfoPane />
-
-    <VendingAdministration />
-
-    <VendingMachine />
-
+    <RouterProvider router={router} />
   </UserContextProvider>
 }
 

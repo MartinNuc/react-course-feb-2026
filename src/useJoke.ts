@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 type JokeResponse = {
     value: string;
 }
 
-export function useJoke() {
+export function useJoke(category?: string) {
     const [joke, setJoke] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
@@ -13,7 +14,11 @@ export function useJoke() {
     const fetchNext = useCallback(async function fetchNext() {
         try {
             setIsLoading(true);
-            const response = await fetch('https://api.chucknorris.io/jokes/random')
+            const url = new URLSearchParams();
+            if (category) {
+                url.set('category', category);
+            }
+            const response = await fetch(`https://api.chucknorris.io/jokes/random?${url.toString()}`)
             const body: JokeResponse = await response.json();
 
             setJoke(body.value);
@@ -25,7 +30,7 @@ export function useJoke() {
         } finally {
             setIsLoading(false);
         }
-    }, []);
+    }, [category]);
 
     useEffect(() => {
         void fetchNext();

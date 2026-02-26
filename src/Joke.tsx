@@ -1,7 +1,9 @@
+import { useParams } from "react-router-dom";
 import { useJoke } from "./useJoke";
 
 export const Joke = () => {
-    const {joke, history, isLoading, error, fetchNext} = useJoke();
+    const {category} = useParams();
+    const {joke, history, isLoading, error, fetchNext} = useJoke(category);
 
     return <div>
         {isLoading && <span>🕰️</span>}
