@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { UserContext } from "./UserContext";
+import { useUserContext } from "./UserContext";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as yup from 'yup';
 import React from "react";
@@ -15,7 +14,7 @@ const schema = yup.object().shape({
 })
 
 export const LoginForm = React.memo(function LoginForm() {
-    const { login } = useContext(UserContext);
+    const { login } = useUserContext();
 
     return <Formik onSubmit={(values) => login(values.username, values.password)} validationSchema={schema} initialValues={initialValues}>
         <Form>

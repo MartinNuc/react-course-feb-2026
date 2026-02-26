@@ -1,18 +1,15 @@
-import { AlbumVoting } from './AlbumVoting';
 import './App.css'
+import { UserContextProvider } from './UserContext';
 import { VendingAdministration } from './VendingAdministration';
 import { VendingMachine } from './VendingMachine';
 
 function App() {
-  return <>
-
-  <AlbumVoting />
-{/* 
+  return <UserContextProvider>
     <VendingAdministration />
 
-    <VendingMachine /> */}
+    <VendingMachine />
 
-  </>
+  </UserContextProvider>
 }
 
 export default App

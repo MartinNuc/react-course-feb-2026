@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react"
-import { UserContext } from "./UserContext";
+import { useEffect, useState } from "react"
+import { useUserContext } from "./UserContext";
 
 type Machine = {
     id: string;
@@ -11,7 +11,7 @@ type MachinesResponse = Machine[];
 
 export const Machines = () => {
     const [machines, setMachines] = useState<Machine[]>([]);
-    const { token } = useContext(UserContext);
+    const { token } = useUserContext();
 
     useEffect(() => {
         if (token) {
