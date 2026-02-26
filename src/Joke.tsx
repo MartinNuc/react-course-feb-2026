@@ -1,8 +1,10 @@
-import { useParams } from "react-router-dom";
 import { useJoke } from "./useJoke";
 
-export const Joke = () => {
-    const {category} = useParams();
+type Props = {
+    category: string;
+}
+
+export const Joke = ({category}: Props) => {
     const {joke, history, isLoading, error, fetchNext} = useJoke(category);
 
     return <div>
