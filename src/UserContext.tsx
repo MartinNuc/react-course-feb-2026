@@ -19,7 +19,7 @@ const UserContext = React.createContext<UserContext>({} as unknown as UserContex
 export function UserContextProvider({children}: PropsWithChildren) {
       const [user, setUser] = useState<UserContext['user']>(null);
       const [token, setToken] = useState<UserContext['token']>(null);
-  
+
       async function login(username: string, password: string) {
           const payload = { username, password };
           const response = await axios.post<LoginResponse>('https://simple-vending-api-demo.onrender.com/login', payload);
