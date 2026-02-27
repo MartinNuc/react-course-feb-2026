@@ -12,8 +12,6 @@ export function HomePage() {
 
         <UserInfoPane />
 
-        <VendingAdministration />
-
         <VendingMachine />
 
     </>
