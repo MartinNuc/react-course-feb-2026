@@ -1,46 +1,34 @@
-import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import useSWR from "swr";
 
 type JokeResponse = {
     value: string;
 }
 
+const fetcher = async (url: string) => {
+    const response = await fetch(url);
+    const json: JokeResponse = await response.json();
+    return json;
+}
+
 export function useJoke(category?: string) {
-    const [joke, setJoke] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<Error | null>(null);
-    const [history, setHistory] = useState<string[]>([]);
+    const url = new URLSearchParams();
+    if (category) {
+        url.set('category', category);
+    }
 
-    const fetchNext = useCallback(async function fetchNext() {
-        try {
-            setIsLoading(true);
-            const url = new URLSearchParams();
-            if (category) {
-                url.set('category', category);
-            }
-            const response = await fetch(`https://api.chucknorris.io/jokes/random?${url.toString()}`)
-            const body: JokeResponse = await response.json();
+    const { data, isValidating, error } = useSWR<JokeResponse>(`https://api.chucknorris.io/jokes/random?${url.toString()}`, fetcher, {suspense: true});
 
-            setJoke(body.value);
-            setHistory(history => [...history, body.value]);
-        } catch (e: unknown) {
-            if (e instanceof Error) {
-                setError(e);
-            }
-        } finally {
-            setIsLoading(false);
-        }
-    }, [category]);
+    const joke = data?.value;
 
-    useEffect(() => {
-        void fetchNext();
-    }, [fetchNext]);
+    function fetchNext() {
+        throw new Error('Not implemented');
+    }
 
     return {
-        isLoading,
+        isLoading: isValidating,
         error,
         joke,
         fetchNext,
-        history
+        history: []
     }
 }

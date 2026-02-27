@@ -17,3 +17,7 @@ export const Joke = ({category}: Props) => {
         </ul>
     </div>
 }
+
+
+
+

@@ -1,12 +1,9 @@
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Joke } from "../Joke";
+import { Suspense } from "react";
 
 export function JokePage() {
     const {category} = useParams();
-    const [searchParams] = useSearchParams();
-
-    console.log('searchParams', searchParams.get('page'))
-
     const navigate = useNavigate();
     
     if (!category) { 
@@ -14,7 +11,7 @@ export function JokePage() {
         return null;
     }
 
-    return <>
+    return <Suspense fallback={<div>Joke is loading...</div>}>
         <Joke key={category} category={category} />
-    </>
+    </Suspense>
 }
