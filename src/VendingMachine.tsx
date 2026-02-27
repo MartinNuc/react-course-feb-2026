@@ -24,7 +24,7 @@ export function VendingMachine() {
     const [cart, setCart] = useState<Item[]>([]);
     const [coins, setCoins] = useState(0);
 
-    
+
 
     function handleSelect(selectedId: Item['id']) {
         const addedItem = itemOptions.find(item => item.item.id === selectedId)?.item;
@@ -46,6 +46,18 @@ export function VendingMachine() {
                 <button onClick={() => addCoins(20)}>+ 20 coins</button>
                 <button onClick={() => addCoins(30)}>+ 30 coins</button>
                 <ChargeCoinInput onAddCoins={addCoins} />
+            </DropdownComponent>
+            
+            <DropdownComponent label="Insert coins">
+                {({close}) => (
+                    <>
+                        <button onClick={() => addCoins(10)}>+ 10 coins</button>
+                        <button onClick={() => addCoins(20)}>+ 20 coins</button>
+                        <button onClick={() => addCoins(30)}>+ 30 coins</button>
+                        <ChargeCoinInput onAddCoins={addCoins} />
+                        <button onClick={() => close()}>Cancel</button>
+                    </>
+                )}
             </DropdownComponent>
 
             <div>Coins: {coins},-</div>
